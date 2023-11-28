@@ -7,14 +7,17 @@ import com.mathias.womenstore.model.Product;
 import com.mathias.womenstore.model.Shoe;
 import com.mathias.womenstore.model.Shop;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 public class ProductCardController {
-
-    private Product product;
 
     @FXML
     private Button btnBuyProduct;
@@ -50,6 +53,8 @@ public class ProductCardController {
     private Text txtProductStock;
 
     private MainMenuController mainMenuController;
+    private Product product;
+    private Shop shop;
 
     private final ShopDao shopDao = new ShopDao();
 
@@ -57,34 +62,42 @@ public class ProductCardController {
 
     @FXML
     private void onClickSell() {
-        double priceProduct = product.getPrice();
-        Shop shop = shopDao.getShop();
-        double currentCapital = shop.getCapital();
-        double currentIncome = shop.getIncome();
+        if (checkSell()) {
+            showSellImpossible();
+            double priceProduct = product.getPrice();
+            double currentCapital = shop.getCapital();
+            double currentIncome = shop.getIncome();
 
-        shopDao.setCapital(currentCapital + priceProduct);
-        shopDao.setIncome(currentIncome + priceProduct);
-        this.mainMenuController.setShopDetails();
+            shopDao.setCapital(currentCapital + priceProduct);
+            shopDao.setIncome(currentIncome + priceProduct);
+            this.mainMenuController.setShopDetails();
 
-        productDao.updateProductStock(product, false);
-        this.product.setNbItems(product.getNbItems() - 1);
-        this.txtProductStock.setText("In stock: " + product.getNbItems());
+            productDao.updateProductStock(product, false);
+            this.product.setNbItems(product.getNbItems() - 1);
+            this.txtProductStock.setText("In stock: " + product.getNbItems());
+        } else {
+            showSellImpossible();
+        }
     }
 
     @FXML
     private void onClickBuy() {
-        double priceProduct = product.getPrice();
-        Shop shop = shopDao.getShop();
-        double currentCapital = shop.getCapital();
-        double currentCost = shop.getCost();
+        if (checkBuy()) {
+            double priceProduct = product.getPrice();
+            double currentCapital = shop.getCapital();
+            double currentCost = shop.getCost();
 
-        shopDao.setCapital(currentCapital - priceProduct);
-        shopDao.setCost(currentCost + priceProduct);
-        this.mainMenuController.setShopDetails();
 
-        productDao.updateProductStock(product, true);
-        this.product.setNbItems(product.getNbItems() + 1);
-        this.txtProductStock.setText("In stock: " + product.getNbItems());
+            shopDao.setCapital(currentCapital - priceProduct);
+            shopDao.setCost(currentCost + priceProduct);
+            this.mainMenuController.setShopDetails();
+
+            productDao.updateProductStock(product, true);
+            this.product.setNbItems(product.getNbItems() + 1);
+            this.txtProductStock.setText("In stock: " + product.getNbItems());
+        } else {
+            showBuyImpossible();
+        }
     }
 
 
@@ -100,5 +113,42 @@ public class ProductCardController {
         txtProductName.setText(product.getName());
         txtProductStock.setText("In stock: " + product.getNbItems());
         this.product = product;
+        this.shop = shopDao.getShop();
+    }
+
+    private boolean checkSell() {
+        return product.getNbItems() > 0;
+    }
+
+    private boolean checkBuy() {
+        return shop.getCapital() >= product.getPrice();
+    }
+
+    public void showSellImpossible() {
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Alert");
+
+        Label label = new Label("Not enough stock to sell this item.");
+        StackPane popupLayout = new StackPane();
+        popupLayout.getChildren().add(label);
+
+        Scene popupScene = new Scene(popupLayout, 250, 150);
+        popupStage.setScene(popupScene);
+        popupStage.showAndWait();
+    }
+
+    public void showBuyImpossible() {
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Alert");
+
+        Label label = new Label("You don't have enough capital to buy this product.");
+        StackPane popupLayout = new StackPane();
+        popupLayout.getChildren().add(label);
+
+        Scene popupScene = new Scene(popupLayout, 300, 150);
+        popupStage.setScene(popupScene);
+        popupStage.showAndWait();
     }
 }

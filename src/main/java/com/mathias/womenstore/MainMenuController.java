@@ -76,16 +76,10 @@ public class MainMenuController implements Initializable {
     private final ClothesDao clothesDao = new ClothesDao();
     private final AccessoriesDao accessoriesDao = new AccessoriesDao();
     private final ShopDao shopDao = new ShopDao();
-    public static Text shopCapital;
-    public static Text shopCost;
-    public static Text shopIncome;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        shopCapital = txtCapital;
-        shopCost = txtCost;
-        shopIncome = txtIncome;
-
         setShopDetails();
         cbCategories.setItems(FXCollections.observableArrayList("All Products", "Clothes", "Shoes", "Accessories"));
         cbCategories.getSelectionModel().selectFirst();
