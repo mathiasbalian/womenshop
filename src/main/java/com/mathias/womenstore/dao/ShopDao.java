@@ -3,10 +3,13 @@ package com.mathias.womenstore.dao;
 import com.mathias.womenstore.dbmanager.DbManager;
 import com.mathias.womenstore.model.Shop;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 public class ShopDao {
-    
+
     public Shop getShop() {
         Shop shop = new Shop();
         Connection connection = DbManager.getConnection();
@@ -32,8 +35,7 @@ public class ShopDao {
         try {
             Statement statement = connection.createStatement();
             String query = "UPDATE Shop SET capital = " + newCapital;
-            int rowsAffected = statement.executeUpdate(query);
-            System.out.println(rowsAffected + " row(s) affected.");
+            statement.executeUpdate(query);
             DbManager.close(connection, statement, null);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -58,8 +60,7 @@ public class ShopDao {
         try {
             Statement statement = connection.createStatement();
             String query = "UPDATE Shop SET cost = " + newCost;
-            int rowsAffected = statement.executeUpdate(query);
-            System.out.println(rowsAffected + " row(s) affected.");
+            statement.executeUpdate(query);
             DbManager.close(connection, statement, null);
         } catch (SQLException e) {
             e.printStackTrace();
