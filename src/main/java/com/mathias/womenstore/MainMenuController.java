@@ -4,6 +4,7 @@ import com.mathias.womenstore.dao.AccessoriesDao;
 import com.mathias.womenstore.dao.ClothesDao;
 import com.mathias.womenstore.dao.ShoesDao;
 import com.mathias.womenstore.dao.ShopDao;
+import com.mathias.womenstore.dao.ProductDao;
 import com.mathias.womenstore.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -74,6 +75,7 @@ public class MainMenuController implements Initializable {
     @FXML
     private ComboBox<String> cbCategories;
 
+    private final ProductDao productDao = new ProductDao();
     private final ShoesDao shoesDao = new ShoesDao();
     private final ClothesDao clothesDao = new ClothesDao();
     private final AccessoriesDao accessoriesDao = new AccessoriesDao();
@@ -82,7 +84,7 @@ public class MainMenuController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setShopDetails();
-        cbCategories.setItems(FXCollections.observableArrayList("Clothes", "Shoes", "Accessories"));
+        cbCategories.setItems(FXCollections.observableArrayList("All Products", "Clothes", "Shoes", "Accessories"));
         cbCategories.getSelectionModel().selectFirst();
         onCategoryChange();
     }
@@ -92,6 +94,9 @@ public class MainMenuController implements Initializable {
         hBoxProductList.getChildren().clear();
         List<? extends Product> products;
         switch (cbCategories.getValue()) {
+            case "All Products":
+                products = getProducts();
+                break;
             case "Shoes":
                 products = getShoes();
                 break;
@@ -120,6 +125,9 @@ public class MainMenuController implements Initializable {
         }
     }
 
+    private List<Product> getProducts() {
+        return productDao.getProducts();
+    }
     private List<Clothes> getClothes() {
         return clothesDao.getClothes();
     }
