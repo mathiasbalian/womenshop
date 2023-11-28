@@ -6,21 +6,21 @@
 <?import javafx.scene.text.Text?>
 
 <FlowPane alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <FlowPane fx:id="fpOurProducts" alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="80.0" prefWidth="700.0" prefWrapLength="10.0" style="-fx-background-color: #bfa99b;">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-         <children>
-            <Text fx:id="txtOurProducts" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a product">
-               <font>
-                  <Font name="Montserrat Bold" size="31.0" />
-               </font>
-               <FlowPane.margin>
-                  <Insets />
-               </FlowPane.margin>
-            </Text>
-         </children>
-      </FlowPane>
-   </children>
+    <children>
+        <FlowPane fx:id="fpOurProducts" alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="80.0" prefWidth="700.0" prefWrapLength="10.0" style="-fx-background-color: #bfa99b;">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <children>
+                <Text fx:id="txtOurProducts" strokeType="OUTSIDE" strokeWidth="0.0" text="Add a product">
+                    <font>
+                        <Font name="Montserrat Bold" size="31.0" />
+                    </font>
+                    <FlowPane.margin>
+                        <Insets />
+                    </FlowPane.margin>
+                </Text>
+            </children>
+        </FlowPane>
+    </children>
 </FlowPane>
