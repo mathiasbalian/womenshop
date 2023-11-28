@@ -1,6 +1,6 @@
 package com.mathias.womenstore.dao;
 
-import com.mathias.womenstore.dbconnector.DbManager;
+import com.mathias.womenstore.dbmanager.DbManager;
 import com.mathias.womenstore.model.Accessory;
 
 import java.sql.Connection;

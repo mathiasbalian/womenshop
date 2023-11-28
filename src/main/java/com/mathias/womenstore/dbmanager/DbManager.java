@@ -1,4 +1,4 @@
-package com.mathias.womenstore.dbconnector;
+package com.mathias.womenstore.dbmanager;
 
 import java.sql.*;
 
@@ -9,11 +9,10 @@ public abstract class DbManager {
 
     public static Connection getConnection() {
         try {
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/store?serverTimezone=Europe%2FParis",
-                    "root",
-                    "root");
-            return connection;
+            return DriverManager.getConnection(
+                    DATABASE_URL,
+                    DATABASE_USERNAME,
+                    DATABASE_PASSWORD);
 
         } catch (SQLException e) {
             e.printStackTrace();
