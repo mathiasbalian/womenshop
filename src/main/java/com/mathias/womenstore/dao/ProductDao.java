@@ -30,7 +30,7 @@ public class ProductDao {
             return new Shoe(productId, name, price, nbItems, shoeSize);
         }
     }
-    
+
     public List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         Connection connection = DbManager.getConnection();
@@ -82,5 +82,18 @@ public class ProductDao {
             e.printStackTrace();
         }
         return products;
+    }
+
+    public void updateProductStock(Product product, boolean increase) {
+        Connection connection = DbManager.getConnection();
+        try {
+            Statement statement = connection.createStatement();
+            String query = increase ? "UPDATE Product SET nbItems = nbItems + 1 WHERE productId = " + product.getId() :
+                    "UPDATE Product SET nbItems = nbItems - 1 WHERE productId = " + product.getId();
+            statement.executeUpdate(query);
+            DbManager.close(connection, statement, null);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

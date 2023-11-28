@@ -1,5 +1,6 @@
 package com.mathias.womenstore;
 
+import com.mathias.womenstore.dao.ProductDao;
 import com.mathias.womenstore.dao.ShopDao;
 import com.mathias.womenstore.model.Clothes;
 import com.mathias.womenstore.model.Product;
@@ -52,15 +53,22 @@ public class ProductCardController {
 
     private final ShopDao shopDao = new ShopDao();
 
+    private final ProductDao productDao = new ProductDao();
+
     @FXML
     private void onClickSell() {
         double priceProduct = product.getPrice();
         Shop shop = shopDao.getShop();
         double currentCapital = shop.getCapital();
         double currentIncome = shop.getIncome();
+
         shopDao.setCapital(currentCapital + priceProduct);
         shopDao.setIncome(currentIncome + priceProduct);
         this.mainMenuController.setShopDetails();
+
+        productDao.updateProductStock(product, false);
+        this.product.setNbItems(product.getNbItems() - 1);
+        this.txtProductStock.setText("In stock: " + product.getNbItems());
     }
 
     @FXML
@@ -69,9 +77,14 @@ public class ProductCardController {
         Shop shop = shopDao.getShop();
         double currentCapital = shop.getCapital();
         double currentCost = shop.getCost();
+
         shopDao.setCapital(currentCapital - priceProduct);
         shopDao.setCost(currentCost + priceProduct);
         this.mainMenuController.setShopDetails();
+
+        productDao.updateProductStock(product, true);
+        this.product.setNbItems(product.getNbItems() + 1);
+        this.txtProductStock.setText("In stock: " + product.getNbItems());
     }
 
 
