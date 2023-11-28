@@ -56,7 +56,6 @@ public class ProductCardController implements Initializable {
     }
 
     public void setProduct(Product product) {
-        txtProductName.setText(product.getName());
         if (product instanceof Shoe) {
             txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + product.getPrice() + "€");
         } else if (product instanceof Clothes) {
@@ -64,6 +63,7 @@ public class ProductCardController implements Initializable {
         } else {
             txtProductPrice.setText(product.getPrice() + "€");
         }
+        txtProductName.setText(product.getName());
         txtProductStock.setText("In stock: " + product.getNbItems());
         this.product = product;
     }
