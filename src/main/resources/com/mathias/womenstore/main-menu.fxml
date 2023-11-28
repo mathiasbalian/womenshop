@@ -98,7 +98,7 @@
                 <Insets />
             </FlowPane.margin>
         </FlowPane>
-        <FlowPane fx:id="fpFilters" alignment="BOTTOM_LEFT" columnHalignment="CENTER" prefHeight="70.0" prefWidth="1400.0">
+        <FlowPane fx:id="fpFilters" alignment="BOTTOM_LEFT" columnHalignment="CENTER" hgap="20.0" prefHeight="70.0" prefWidth="1400.0">
          <children>
             <Text fx:id="txtFilterCategory" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by category: ">
                <font>
@@ -110,7 +110,7 @@
             </Text>
             <ComboBox fx:id="cbCategories" onAction="#onCategoryChange" prefWidth="150.0" style="-fx-background-color: #f7ebe1; -fx-border-color: #f7ebe1;">
                <FlowPane.margin>
-                  <Insets left="20.0" />
+                  <Insets />
                </FlowPane.margin>
             </ComboBox>
          </children></FlowPane>
