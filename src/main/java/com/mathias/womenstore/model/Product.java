@@ -7,6 +7,7 @@ public abstract class Product {
     private int nbItems;
 
     public Product(int id, String name, double price, int nbItems) {
+        this.id = id;
         this.name = name;
         this.price = price;
         this.nbItems = nbItems;
@@ -51,5 +52,13 @@ public abstract class Product {
 
     public void setNbItems(int nbItems) {
         this.nbItems = nbItems;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
