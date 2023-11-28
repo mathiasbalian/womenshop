@@ -1,6 +1,8 @@
 package com.mathias.womenstore;
 
+import com.mathias.womenstore.model.Clothes;
 import com.mathias.womenstore.model.Product;
+import com.mathias.womenstore.model.Shoe;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -55,7 +57,13 @@ public class ProductCardController implements Initializable {
 
     public void setProduct(Product product) {
         txtProductName.setText(product.getName());
-        txtProductPrice.setText(product.getPrice() + "€");
+        if (product instanceof Shoe) {
+            txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + product.getPrice() + "€");
+        } else if (product instanceof Clothes) {
+            txtProductPrice.setText("Size " + ((Clothes) product).getSize() + " - " + product.getPrice() + "€");
+        } else {
+            txtProductPrice.setText(product.getPrice() + "€");
+        }
         txtProductStock.setText("In stock: " + product.getNbItems());
         this.product = product;
     }
