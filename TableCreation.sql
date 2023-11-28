@@ -56,3 +56,5 @@ VALUES (3);
 SELECT * FROM Shoe NATURAL JOIN Product;
 SELECT * FROM Clothes NATURAL JOIN Product;
 SELECT * FROM Accessory NATURAL JOIN Product;
+
+SELECT * FROM Product NATURAL JOIN clothes; 
