@@ -3,10 +3,8 @@ package com.mathias.womenstore;
 import com.mathias.womenstore.dao.AccessoriesDao;
 import com.mathias.womenstore.dao.ClothesDao;
 import com.mathias.womenstore.dao.ShoesDao;
-import com.mathias.womenstore.model.Accessory;
-import com.mathias.womenstore.model.Clothes;
-import com.mathias.womenstore.model.Product;
-import com.mathias.womenstore.model.Shoe;
+import com.mathias.womenstore.dao.ShopDao;
+import com.mathias.womenstore.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -79,9 +77,11 @@ public class MainMenuController implements Initializable {
     private final ShoesDao shoesDao = new ShoesDao();
     private final ClothesDao clothesDao = new ClothesDao();
     private final AccessoriesDao accessoriesDao = new AccessoriesDao();
+    private final ShopDao shopDao = new ShopDao();
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        setShopDetails();
         cbCategories.setItems(FXCollections.observableArrayList("Clothes", "Shoes", "Accessories"));
         cbCategories.getSelectionModel().selectFirst();
         onCategoryChange();
@@ -130,5 +130,12 @@ public class MainMenuController implements Initializable {
 
     private List<Accessory> getAccessories() {
         return accessoriesDao.getAccessories();
+    }
+
+    private void setShopDetails() {
+        Shop shop = shopDao.getShop();
+        txtCapital.setText("Capital: " + shop.getCapital() + "€");
+        txtCost.setText("Cost: " + shop.getCost() + "€");
+        txtIncome.setText("Income: " + shop.getIncome() + "€");
     }
 }
