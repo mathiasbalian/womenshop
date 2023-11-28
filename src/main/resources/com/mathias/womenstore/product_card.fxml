@@ -51,7 +51,7 @@
             <Insets top="10.0" />
          </FlowPane.margin>
          <children>
-            <Button fx:id="btnSellProduct" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Sell" textFill="WHITE">
+            <Button fx:id="btnSellProduct" mnemonicParsing="false" onAction="#onClickSell" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Sell" textFill="WHITE">
                <font>
                   <Font name="Montserrat Bold" size="12.0" />
                </font>
@@ -61,7 +61,7 @@
                   <Font name="Montserrat Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnBuyProduct" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Buy" textFill="WHITE">
+            <Button fx:id="btnBuyProduct" mnemonicParsing="false" onAction="#onClickBuy" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Buy" textFill="WHITE">
                <font>
                   <Font name="Montserrat Bold" size="13.0" />
                </font>

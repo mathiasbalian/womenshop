@@ -140,10 +140,12 @@ public class MainMenuController implements Initializable {
         return accessoriesDao.getAccessories();
     }
 
-    private void setShopDetails() {
+    public void setShopDetails() {
         Shop shop = shopDao.getShop();
         txtCapital.setText("Capital: " + shop.getCapital() + "€");
         txtCost.setText("Cost: " + shop.getCost() + "€");
         txtIncome.setText("Income: " + shop.getIncome() + "€");
+        System.out.println(txtCost.getText());
+        System.out.println(txtCapital.getText());
     }
 }
