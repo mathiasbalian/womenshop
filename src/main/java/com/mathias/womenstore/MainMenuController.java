@@ -1,10 +1,6 @@
 package com.mathias.womenstore;
 
-import com.mathias.womenstore.dao.AccessoriesDao;
-import com.mathias.womenstore.dao.ClothesDao;
-import com.mathias.womenstore.dao.ShoesDao;
-import com.mathias.womenstore.dao.ShopDao;
-import com.mathias.womenstore.dao.ProductDao;
+import com.mathias.womenstore.dao.*;
 import com.mathias.womenstore.model.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -80,9 +76,16 @@ public class MainMenuController implements Initializable {
     private final ClothesDao clothesDao = new ClothesDao();
     private final AccessoriesDao accessoriesDao = new AccessoriesDao();
     private final ShopDao shopDao = new ShopDao();
+    public static Text shopCapital;
+    public static Text shopCost;
+    public static Text shopIncome;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        shopCapital = txtCapital;
+        shopCost = txtCost;
+        shopIncome = txtIncome;
+
         setShopDetails();
         cbCategories.setItems(FXCollections.observableArrayList("All Products", "Clothes", "Shoes", "Accessories"));
         cbCategories.getSelectionModel().selectFirst();
@@ -117,7 +120,7 @@ public class MainMenuController implements Initializable {
             try {
                 FlowPane fp = loader.load();
                 ProductCardController productCardController = loader.getController();
-                productCardController.setProduct(product);
+                productCardController.initializeController(product, this);
                 hBoxProductList.getChildren().add(fp);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -128,6 +131,7 @@ public class MainMenuController implements Initializable {
     private List<Product> getProducts() {
         return productDao.getProducts();
     }
+
     private List<Clothes> getClothes() {
         return clothesDao.getClothes();
     }
@@ -145,7 +149,5 @@ public class MainMenuController implements Initializable {
         txtCapital.setText("Capital: " + shop.getCapital() + "€");
         txtCost.setText("Cost: " + shop.getCost() + "€");
         txtIncome.setText("Income: " + shop.getIncome() + "€");
-        System.out.println(txtCost.getText());
-        System.out.println(txtCapital.getText());
     }
 }
