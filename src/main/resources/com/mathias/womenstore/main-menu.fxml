@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<FlowPane fx:id="fpMainPage" prefHeight="750.0" prefWidth="1400.0" prefWrapLength="700.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathias.womenstore.MainMenuController">
+    <children>
+        <FlowPane fx:id="fpHeader" prefHeight="90.0" prefWidth="1400.0" style="-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 0);;">
+            <children>
+                <FlowPane fx:id="fpTitle" alignment="CENTER_LEFT" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="300.0" prefWrapLength="10.0" style="-fx-background-color: #bfa99b;">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <children>
+                        <Text fx:id="txtTitle" fill="#101010" strokeType="OUTSIDE" strokeWidth="0.0" text="Women's Shop">
+                            <font>
+                                <Font name="Montserrat Bold" size="28.0" />
+                            </font>
+                            <FlowPane.margin>
+                                <Insets left="40.0" />
+                            </FlowPane.margin>
+                        </Text>
+                    </children>
+                </FlowPane>
+                <FlowPane fx:id="fpStats" alignment="CENTER_RIGHT" columnHalignment="CENTER" hgap="80.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="1100.0" prefWrapLength="10.0" style="-fx-background-color: #bfa99b;">
+                    <opaqueInsets>
+                        <Insets />
+                    </opaqueInsets>
+                    <children>
+                        <FlowPane fx:id="fpIncome" alignment="CENTER" prefHeight="45.0" prefWidth="170.0" style="-fx-border-radius: 20; -fx-border-color: #323232; -fx-background-color: #323232; -fx-background-radius: 20;">
+                            <FlowPane.margin>
+                                <Insets right="30.0" />
+                            </FlowPane.margin>
+                            <children>
+                                <Text fx:id="txtIncome" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Income : XXXX€" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Montserrat Bold" size="16.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                        </FlowPane>
+                        <FlowPane fx:id="fpCost" alignment="CENTER" prefHeight="45.0" prefWidth="170.0" style="-fx-border-radius: 20; -fx-border-color: #323232; -fx-background-color: #323232; -fx-background-radius: 20;">
+                            <children>
+                                <Text fx:id="txtCost" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Cost : XXXX€" textAlignment="CENTER">
+                                    <font>
+                                        <Font name="Montserrat Bold" size="16.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                            <FlowPane.margin>
+                                <Insets right="30.0" />
+                            </FlowPane.margin>
+                        </FlowPane>
+                        <FlowPane fx:id="fpCapital" alignment="CENTER" prefHeight="45.0" prefWidth="170.0" style="-fx-border-radius: 20; -fx-border-color: #323232; -fx-background-color: #323232; -fx-background-radius: 20;">
+                            <children>
+                                <Text fx:id="txtCapital" fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Capital : XXXX€">
+                                    <font>
+                                        <Font name="Montserrat Bold" size="16.0" />
+                                    </font>
+                                </Text>
+                            </children>
+                            <FlowPane.margin>
+                                <Insets right="30.0" />
+                            </FlowPane.margin>
+                        </FlowPane>
+                    </children>
+                </FlowPane>
+            </children>
+        </FlowPane>
+        <FlowPane fx:id="fpOurProducts" alignment="CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="150.0" prefWidth="1400.0" prefWrapLength="10.0" style="-fx-background-color: #f7ebe1;">
+            <opaqueInsets>
+                <Insets />
+            </opaqueInsets>
+            <children>
+                <Text fx:id="txtOurProducts" strokeType="OUTSIDE" strokeWidth="0.0" text="Our products">
+                    <font>
+                        <Font name="Montserrat Bold" size="31.0" />
+                    </font>
+                    <FlowPane.margin>
+                        <Insets />
+                    </FlowPane.margin>
+                </Text>
+                <Text fx:id="txtDiscover" strokeType="OUTSIDE" strokeWidth="0.0" text="Discover our wonderful collection of clothes, shoes and accessories !">
+                    <FlowPane.margin>
+                        <Insets top="15.0" />
+                    </FlowPane.margin>
+                    <font>
+                        <Font name="Montserrat Bold" size="14.0" />
+                    </font>
+                </Text>
+            </children>
+            <FlowPane.margin>
+                <Insets />
+            </FlowPane.margin>
+        </FlowPane>
+        <FlowPane fx:id="fpFilters" alignment="BOTTOM_LEFT" columnHalignment="CENTER" prefHeight="70.0" prefWidth="1400.0">
+         <children>
+            <Text fx:id="txtFilterCategory" strokeType="OUTSIDE" strokeWidth="0.0" text="Filter by category: ">
+               <font>
+                  <Font name="Montserrat Bold" size="16.0" />
+               </font>
+               <FlowPane.margin>
+                  <Insets left="20.0" />
+               </FlowPane.margin>
+            </Text>
+            <ComboBox fx:id="cbCategories" onAction="#onCategoryChange" prefWidth="150.0" style="-fx-background-color: #f7ebe1; -fx-border-color: #f7ebe1;">
+               <FlowPane.margin>
+                  <Insets left="20.0" />
+               </FlowPane.margin>
+            </ComboBox>
+         </children></FlowPane>
+      <ScrollPane prefHeight="420.0" prefWidth="1400.0" style="-fx-border-width: 0; -fx-border-color: #000000; -fx-background-color: transparent;" vbarPolicy="NEVER">
+         <content>
+              <HBox fx:id="hBoxProductList" alignment="CENTER_LEFT" prefHeight="410.0" prefWidth="1400.0" spacing="25.0">
+               <padding>
+                  <Insets left="15.0" right="15.0" />
+               </padding>
+            </HBox>
+         </content>
+      </ScrollPane>
+    </children>
+</FlowPane>
