@@ -31,9 +31,6 @@ CREATE TABLE IF NOT EXISTS Accessory (
     FOREIGN KEY (productId) REFERENCES Product(productId)
 );
 
--- We create our shop
-SELECT * FROM Shoe NATURAL JOIN PRODUCT;
-
 -- Insert data into Product table
 INSERT INTO Product (productId, name, price, nbItems, shopId)
 VALUES
