@@ -56,7 +56,7 @@
                   <Font name="Montserrat Bold" size="13.0" />
                </font>
             </Button>
-            <Button fx:id="btnEditProduct" mnemonicParsing="false" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Edit" textFill="WHITE">
+            <Button fx:id="btnEditProduct" mnemonicParsing="false" onAction="#onClickEdit" prefHeight="40.0" prefWidth="54.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Edit" textFill="WHITE">
                <font>
                   <Font name="Montserrat Bold" size="13.0" />
                </font>
