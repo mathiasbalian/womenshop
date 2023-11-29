@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -105,13 +106,24 @@ public class ProductCardController {
         this.mainMenuController = controller;
         if (product instanceof Shoe) {
             txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + product.getPrice() + "€");
+            Image image = new Image(String.valueOf(ProductCardController.class.getResource("shoes.jpg")));
+            ivProduct.setImage(image);
         } else if (product instanceof Clothes) {
             txtProductPrice.setText("Size " + ((Clothes) product).getSize() + " - " + product.getPrice() + "€");
+            Image image = new Image(String.valueOf(ProductCardController.class.getResource("clothes.png")));
+            ivProduct.setImage(image);
         } else {
+            Image image = new Image(String.valueOf(ProductCardController.class.getResource("accessories.jpg")));
+            ivProduct.setImage(image);
             txtProductPrice.setText(product.getPrice() + "€");
         }
+        ivProduct.setFitWidth(175);
+        ivProduct.setFitHeight(175);
+        ivProduct.setPreserveRatio(true);
+        ivProduct.setSmooth(true);
         txtProductName.setText(product.getName());
         txtProductStock.setText("In stock: " + product.getNbItems());
+
         this.product = product;
         this.shop = shopDao.getShop();
     }
