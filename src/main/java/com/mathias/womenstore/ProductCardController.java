@@ -20,6 +20,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class ProductCardController {
 
     @FXML
@@ -104,25 +106,25 @@ public class ProductCardController {
     }
 
     public void onClickEdit() {
-//        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_product_page.fxml"));
-//
-//
-//        Parent root = (Parent) fxmlLoader.load();
-//
-//
-//        Scene scene = new Scene(root);
-//
-//
-//        Stage stage = new Stage();
-//
-//
-//        stage.setScene(scene);
-//
-//
-//        stage.setTitle("My Window");
-//
-//
-//        stage.show();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_product_page.fxml"));
+
+        Parent root = null;
+        try {
+            root = (Parent) loader.load();
+
+            Scene scene = new Scene(root);
+
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+
+            stage.setTitle("My Window");
+
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 

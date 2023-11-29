@@ -8,10 +8,9 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<?import javafx.scene.control.TextField?>
-<FlowPane fx:id="fpProductCard" alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="460.0" prefWidth="250.0" style="-fx-background-color: #f7ebe1;" vgap="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathias.womenstore.ProductCardController">
+<FlowPane fx:id="fpProductCard" alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="460.0" prefWidth="400.0" style="-fx-background-color: #f7ebe1;" vgap="5.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathias.womenstore.ProductCardController">
     <children>
-      <FlowPane alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="252.0" style="-fx-background-color: #bfa99b;">
+      <FlowPane alignment="TOP_RIGHT" prefHeight="57.0" prefWidth="400.0" style="-fx-background-color: #bfa99b;">
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Edit a product" wrappingWidth="168.9830722808838">
                <font>
@@ -37,22 +36,22 @@
             </FlowPane.margin></ImageView>
       <FlowPane alignment="BOTTOM_CENTER" orientation="VERTICAL" prefHeight="136.0" prefWidth="220.0" vgap="10.0">
          <children>
-            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="375.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name" wrappingWidth="57.693359375" />
-                  <TextField fx:id="txtFieldEditName" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" />
+                  <TextField fx:id="txtFieldEditName" prefHeight="26.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" />
                </children>
             </FlowPane>
-            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="375.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Price" wrappingWidth="57.693359375" />
-                  <TextField fx:id="txtFieldEditPrice" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" />
+                  <TextField fx:id="txtFieldEditPrice" prefHeight="26.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" />
                </children>
             </FlowPane>
-            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
+            <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="375.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
                <children>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Size" wrappingWidth="57.693359375" />
-                  <TextField fx:id="txtFieldEditSize" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" />
+                  <TextField fx:id="txtFieldEditSize" prefHeight="26.0" prefWidth="250.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 15;" />
                </children>
             </FlowPane>
          </children>
