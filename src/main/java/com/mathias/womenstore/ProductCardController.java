@@ -64,7 +64,6 @@ public class ProductCardController {
     @FXML
     private void onClickSell() {
         if (checkSell()) {
-            showSellImpossible();
             double priceProduct = product.getPrice();
             double currentCapital = shop.getCapital();
             double currentIncome = shop.getIncome();
@@ -87,7 +86,6 @@ public class ProductCardController {
             double priceProduct = product.getPrice();
             double currentCapital = shop.getCapital();
             double currentCost = shop.getCost();
-
 
             shopDao.setCapital(currentCapital - priceProduct);
             shopDao.setCost(currentCost + priceProduct);

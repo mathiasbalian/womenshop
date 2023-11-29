@@ -6,10 +6,13 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -143,5 +146,21 @@ public class MainMenuController implements Initializable {
         txtCapital.setText("Capital: " + shop.getCapital() + "€");
         txtCost.setText("Cost: " + shop.getCost() + "€");
         txtIncome.setText("Income: " + shop.getIncome() + "€");
+    }
+
+    @FXML
+    private void onAddProductClick() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("add-product.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("My Window");
+        stage.show();
     }
 }
