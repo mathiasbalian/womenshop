@@ -57,10 +57,6 @@ public class ProductCardController {
     private Product product;
     private Shop shop;
 
-    private final ShopDao shopDao = new ShopDao();
-
-    private final ProductDao productDao = new ProductDao();
-
     @FXML
     private void onClickSell() {
         if (checkSell()) {
@@ -68,11 +64,13 @@ public class ProductCardController {
             double currentCapital = shop.getCapital();
             double currentIncome = shop.getIncome();
 
-            shopDao.setCapital(currentCapital + priceProduct);
-            shopDao.setIncome(currentIncome + priceProduct);
+            ShopDao.setCapital(currentCapital + priceProduct);
+            ShopDao.setIncome(currentIncome + priceProduct);
+            this.shop.setCapital(currentCapital + priceProduct);
+            this.shop.setIncome(currentIncome + priceProduct);
             this.mainMenuController.setShopDetails();
 
-            productDao.updateProductStock(product, false);
+            ProductDao.updateProductStock(product, false);
             this.product.setNbItems(product.getNbItems() - 1);
             this.txtProductStock.setText("In stock: " + product.getNbItems());
         } else {
@@ -87,11 +85,13 @@ public class ProductCardController {
             double currentCapital = shop.getCapital();
             double currentCost = shop.getCost();
 
-            shopDao.setCapital(currentCapital - priceProduct);
-            shopDao.setCost(currentCost + priceProduct);
+            ShopDao.setCapital(currentCapital - priceProduct);
+            ShopDao.setCost(currentCost + priceProduct);
+            this.shop.setCapital(currentCapital - priceProduct);
+            this.shop.setCost(currentCost + priceProduct);
             this.mainMenuController.setShopDetails();
 
-            productDao.updateProductStock(product, true);
+            ProductDao.updateProductStock(product, true);
             this.product.setNbItems(product.getNbItems() + 1);
             this.txtProductStock.setText("In stock: " + product.getNbItems());
         } else {
@@ -123,7 +123,7 @@ public class ProductCardController {
         txtProductStock.setText("In stock: " + product.getNbItems());
 
         this.product = product;
-        this.shop = shopDao.getShop();
+        this.shop = ShopDao.getShop();
     }
 
     private boolean checkSell() {
