@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public class ShopDao {
 
-    public Shop getShop() {
+    public static Shop getShop() {
         Shop shop = new Shop();
         Connection connection = DbManager.getConnection();
         try {
@@ -30,7 +30,7 @@ public class ShopDao {
         return shop;
     }
 
-    public void setCapital(double newCapital) {
+    public static void setCapital(double newCapital) {
         Connection connection = DbManager.getConnection();
         try {
             Statement statement = connection.createStatement();
@@ -42,20 +42,19 @@ public class ShopDao {
         }
     }
 
-    public void setIncome(double newIncome) {
+    public static void setIncome(double newIncome) {
         Connection connection = DbManager.getConnection();
         try {
             Statement statement = connection.createStatement();
             String query = "UPDATE Shop SET income = " + newIncome;
             int rowsAffected = statement.executeUpdate(query);
-            System.out.println(rowsAffected + " row(s) affected.");
             DbManager.close(connection, statement, null);
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
-    public void setCost(double newCost) {
+    public static void setCost(double newCost) {
         Connection connection = DbManager.getConnection();
         try {
             Statement statement = connection.createStatement();

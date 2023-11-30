@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ClothesDao {
 
-    public List<Clothes> getClothes() {
+    public static List<Clothes> getClothes() {
         List<Clothes> allClothes = new ArrayList<>();
         Connection connection = DbManager.getConnection();
         try {

@@ -12,7 +12,7 @@ import java.util.List;
 
 public class AccessoriesDao {
 
-    public List<Accessory> getAccessories() {
+    public static List<Accessory> getAccessories() {
         List<Accessory> accessories = new ArrayList<>();
         Connection connection = DbManager.getConnection();
         try {
