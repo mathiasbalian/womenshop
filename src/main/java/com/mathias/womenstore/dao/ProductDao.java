@@ -14,8 +14,10 @@ public class ProductDao {
 
     public static void addProduct(Product product) {
         Connection connection = DbManager.getConnection();
+        PreparedStatement statement = null;
+
         try {
-            PreparedStatement statement = connection.prepareStatement("INSERT INTO Product VALUES (?, ?, ?, ?, 1);");
+            statement = connection.prepareStatement("INSERT INTO Product VALUES (?, ?, ?, ?, 1);");
             statement.setInt(1, product.getId());
             statement.setString(2, product.getName());
             statement.setDouble(3, product.getPrice());
@@ -36,12 +38,12 @@ public class ProductDao {
                 statement = connection.prepareStatement("INSERT INTO Accessory VALUES (?);");
                 statement.setInt(1, product.getId());
             }
-            
-            statement.execute();
 
-            DbManager.close(connection, statement, null);
+            statement.execute();
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, null);
         }
     }
 
@@ -65,8 +67,11 @@ public class ProductDao {
     public static List<Product> getProducts() {
         List<Product> products = new ArrayList<>();
         Connection connection = DbManager.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String query = "SELECT \n" +
                     "    P.productId, \n" +
                     "    P.name, \n" +
@@ -103,44 +108,54 @@ public class ProductDao {
                     "    NULL AS shoeSize\n" +
                     "FROM Product P\n" +
                     "NATURAL JOIN Accessory A";
-            ResultSet resultSet = statement.executeQuery(query);
+            resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
                 products.add(assignProductClass(resultSet));
             }
-
-            DbManager.close(connection, statement, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, resultSet);
         }
+
         return products;
     }
 
     public static void updateProductStock(Product product, boolean increase) {
         Connection connection = DbManager.getConnection();
+        Statement statement = null;
+
         try {
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String query = increase ? "UPDATE Product SET nbItems = nbItems + 1 WHERE productId = " + product.getId() :
                     "UPDATE Product SET nbItems = nbItems - 1 WHERE productId = " + product.getId();
             statement.executeUpdate(query);
-            DbManager.close(connection, statement, null);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, null);
         }
     }
 
     public static int getNextId() {
         Connection connection = DbManager.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String query = "SELECT MAX(productId) + 1 FROM Product;";
-            ResultSet resultSet = statement.executeQuery(query);
+            resultSet = statement.executeQuery(query);
             resultSet.next();
             int id = resultSet.getInt(1);
-            DbManager.close(connection, statement, resultSet);
             return id;
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, resultSet);
         }
+
         return 1;
     }
 }

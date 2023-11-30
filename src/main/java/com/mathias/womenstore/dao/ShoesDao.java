@@ -15,23 +15,30 @@ public class ShoesDao {
     public static List<Shoe> getShoes() {
         List<Shoe> shoes = new ArrayList<>();
         Connection connection = DbManager.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String query = "SELECT * FROM Shoe NATURAL JOIN Product;";
-            ResultSet resultSet = statement.executeQuery(query);
+            resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
-                Shoe shoe = new Shoe(resultSet.getInt("productId"),
+                Shoe shoe = new Shoe(
+                        resultSet.getInt("productId"),
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
                         resultSet.getInt("nbItems"),
-                        resultSet.getInt("shoeSize"));
+                        resultSet.getInt("shoeSize")
+                );
                 shoes.add(shoe);
             }
-
-            DbManager.close(connection, statement, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, resultSet);
         }
+
         return shoes;
     }
 }
