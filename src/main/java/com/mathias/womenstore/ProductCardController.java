@@ -110,6 +110,12 @@ public class ProductCardController {
         try {
             root = (Parent) loader.load();
 
+            EditProductController editProductController = loader.getController();
+
+            editProductController.initializeController(product, mainMenuController);
+
+
+
             Scene scene = new Scene(root);
 
             Stage stage = new Stage();
