@@ -6,10 +6,13 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -71,12 +74,6 @@ public class MainMenuController implements Initializable {
     @FXML
     private ComboBox<String> cbCategories;
 
-    private final ProductDao productDao = new ProductDao();
-    private final ShoesDao shoesDao = new ShoesDao();
-    private final ClothesDao clothesDao = new ClothesDao();
-    private final AccessoriesDao accessoriesDao = new AccessoriesDao();
-    private final ShopDao shopDao = new ShopDao();
-
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -88,6 +85,10 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void onCategoryChange() {
+        refreshProducts();
+    }
+
+    public void refreshProducts() {
         hBoxProductList.getChildren().clear();
         List<? extends Product> products;
         switch (cbCategories.getValue()) {
@@ -123,25 +124,43 @@ public class MainMenuController implements Initializable {
     }
 
     private List<Product> getProducts() {
-        return productDao.getProducts();
+        return ProductDao.getProducts();
     }
 
     private List<Clothes> getClothes() {
-        return clothesDao.getClothes();
+        return ClothesDao.getClothes();
     }
 
     private List<Shoe> getShoes() {
-        return shoesDao.getShoes();
+        return ShoesDao.getShoes();
     }
 
     private List<Accessory> getAccessories() {
-        return accessoriesDao.getAccessories();
+        return AccessoriesDao.getAccessories();
     }
 
     public void setShopDetails() {
-        Shop shop = shopDao.getShop();
+        Shop shop = ShopDao.getShop();
         txtCapital.setText("Capital: " + shop.getCapital() + "€");
         txtCost.setText("Cost: " + shop.getCost() + "€");
         txtIncome.setText("Income: " + shop.getIncome() + "€");
+    }
+
+    @FXML
+    private void onAddProductClick() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("add-product.fxml"));
+        Parent root = null;
+        try {
+            root = loader.load();
+            AddProductController addProductController = loader.getController();
+            addProductController.setMainMenuController(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.setTitle("My Window");
+        stage.show();
     }
 }

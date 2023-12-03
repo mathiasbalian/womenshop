@@ -12,25 +12,32 @@ import java.util.List;
 
 public class AccessoriesDao {
 
-    public List<Accessory> getAccessories() {
+    public static List<Accessory> getAccessories() {
         List<Accessory> accessories = new ArrayList<>();
         Connection connection = DbManager.getConnection();
+        Statement statement = null;
+        ResultSet resultSet = null;
+
         try {
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             String query = "SELECT * FROM Accessory NATURAL JOIN Product;";
-            ResultSet resultSet = statement.executeQuery(query);
+            resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
-                Accessory accessory = new Accessory(resultSet.getInt("productId"),
+                Accessory accessory = new Accessory(
+                        resultSet.getInt("productId"),
                         resultSet.getString("name"),
                         resultSet.getDouble("price"),
-                        resultSet.getInt("nbItems"));
+                        resultSet.getInt("nbItems")
+                );
                 accessories.add(accessory);
             }
-
-            DbManager.close(connection, statement, resultSet);
         } catch (SQLException e) {
             e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, resultSet);
         }
+
         return accessories;
     }
 
