@@ -1,8 +1,6 @@
 package com.mathias.womenstore;
 
 import com.mathias.womenstore.dao.ProductDao;
-import com.mathias.womenstore.dao.ShopDao;
-import com.mathias.womenstore.model.Accessory;
 import com.mathias.womenstore.model.Clothes;
 import com.mathias.womenstore.model.Product;
 import com.mathias.womenstore.model.Shoe;
@@ -73,7 +71,9 @@ public class EditProductController {
 
     public void onClickValidate() {
         product.setName(txtFieldEditName.getText());
-        product.setPrice(Double.parseDouble(txtFieldEditPrice.getText()));
+        double discount = product.getCurrentPrice() / product.getRealPrice();
+        product.setRealPrice(Double.parseDouble(txtFieldEditPrice.getText()));
+        product.applyDiscount(discount);
 
         if (product instanceof Shoe) {
             ((Shoe) product).setShoeSize(Integer.parseInt(txtFieldEditSize.getText()));
@@ -91,7 +91,7 @@ public class EditProductController {
         this.product = product;
 
         getTxtFieldEditName().setText(product.getName());
-        getTxtFieldEditPrice().setText(String.valueOf(product.getPrice()));
+        getTxtFieldEditPrice().setText(String.valueOf(product.getRealPrice()));
 
         if (product instanceof Shoe) {
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("shoes.jpg")));
