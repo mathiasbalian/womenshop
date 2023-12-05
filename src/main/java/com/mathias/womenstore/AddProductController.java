@@ -78,17 +78,20 @@ public class AddProductController implements Initializable {
             product = new Clothes(ProductDao.getNextId(),
                     txtFieldProductName.getText(),
                     Double.parseDouble(txtFieldPrice.getText()),
+                    Double.parseDouble(txtFieldPrice.getText()),
                     0,
                     Integer.parseInt(txtFieldSize.getText()));
         } else if (cbCategories.getValue().equals("Shoes")) {
             product = new Shoe(ProductDao.getNextId(),
                     txtFieldProductName.getText(),
                     Double.parseDouble(txtFieldPrice.getText()),
+                    Double.parseDouble(txtFieldPrice.getText()),
                     0,
                     Integer.parseInt(txtFieldSize.getText()));
         } else {
             product = new Accessory(ProductDao.getNextId(),
                     txtFieldProductName.getText(),
+                    Double.parseDouble(txtFieldPrice.getText()),
                     Double.parseDouble(txtFieldPrice.getText()),
                     0);
         }
