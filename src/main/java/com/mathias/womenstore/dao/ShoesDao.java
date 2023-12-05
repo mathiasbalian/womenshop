@@ -27,7 +27,8 @@ public class ShoesDao {
                 Shoe shoe = new Shoe(
                         resultSet.getInt("productId"),
                         resultSet.getString("name"),
-                        resultSet.getDouble("price"),
+                        resultSet.getDouble("realPrice"),
+                        resultSet.getDouble("currentPrice"),
                         resultSet.getInt("nbItems"),
                         resultSet.getInt("shoeSize")
                 );
