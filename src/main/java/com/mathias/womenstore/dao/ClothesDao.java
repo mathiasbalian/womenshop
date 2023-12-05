@@ -27,7 +27,8 @@ public class ClothesDao {
                 Clothes clothes = new Clothes(
                         resultSet.getInt("productId"),
                         resultSet.getString("name"),
-                        resultSet.getDouble("price"),
+                        resultSet.getDouble("realPrice"),
+                        resultSet.getDouble("currentPrice"),
                         resultSet.getInt("nbItems"),
                         resultSet.getInt("size")
                 );
