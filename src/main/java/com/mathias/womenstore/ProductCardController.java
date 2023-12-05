@@ -7,6 +7,8 @@ import com.mathias.womenstore.model.Product;
 import com.mathias.womenstore.model.Shoe;
 import com.mathias.womenstore.model.Shop;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -17,6 +19,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class ProductCardController {
 
@@ -97,6 +101,28 @@ public class ProductCardController {
         } else {
             showBuyImpossible();
         }
+    }
+
+    public void onClickEdit() {
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("edit_product_page.fxml"));
+
+        Parent root = null;
+        try {
+            root = (Parent) loader.load();
+
+            Scene scene = new Scene(root);
+
+            Stage stage = new Stage();
+
+            stage.setScene(scene);
+
+            stage.setTitle("My Window");
+
+            stage.show();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+
     }
 
 
