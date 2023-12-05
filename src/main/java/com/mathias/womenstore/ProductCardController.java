@@ -64,7 +64,7 @@ public class ProductCardController {
     @FXML
     private void onClickSell() {
         if (checkSell()) {
-            double priceProduct = product.getPrice();
+            double priceProduct = product.getCurrentPrice();
             double currentCapital = shop.getCapital();
             double currentIncome = shop.getIncome();
 
@@ -85,7 +85,7 @@ public class ProductCardController {
     @FXML
     private void onClickBuy() {
         if (checkBuy()) {
-            double priceProduct = product.getPrice();
+            double priceProduct = product.getRealPrice();
             double currentCapital = shop.getCapital();
             double currentCost = shop.getCost();
 
@@ -129,17 +129,17 @@ public class ProductCardController {
     public void initializeController(Product product, MainMenuController controller) {
         this.mainMenuController = controller;
         if (product instanceof Shoe) {
-            txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + product.getPrice() + "€");
+            txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + product.getCurrentPrice() + "€");
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("shoes.jpg")));
             ivProduct.setImage(image);
         } else if (product instanceof Clothes) {
-            txtProductPrice.setText("Size " + ((Clothes) product).getSize() + " - " + product.getPrice() + "€");
+            txtProductPrice.setText("Size " + ((Clothes) product).getSize() + " - " + product.getCurrentPrice() + "€");
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("clothes.png")));
             ivProduct.setImage(image);
         } else {
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("accessories.jpg")));
             ivProduct.setImage(image);
-            txtProductPrice.setText(product.getPrice() + "€");
+            txtProductPrice.setText(product.getCurrentPrice() + "€");
         }
         ivProduct.setFitWidth(175);
         ivProduct.setFitHeight(175);
@@ -157,7 +157,7 @@ public class ProductCardController {
     }
 
     private boolean checkBuy() {
-        return shop.getCapital() >= product.getPrice();
+        return shop.getCapital() >= product.getRealPrice();
     }
 
     public void showSellImpossible() {

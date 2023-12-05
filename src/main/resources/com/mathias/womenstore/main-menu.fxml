@@ -5,6 +5,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Slider?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -115,13 +116,39 @@
                   <Insets />
                </FlowPane.margin>
             </ComboBox>
-            <Button fx:id="btnSellProduct" mnemonicParsing="false" onAction="#onAddProductClick" prefHeight="40.0" prefWidth="119.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Add a product" textFill="WHITE">
+            <Button fx:id="btnAddProduct" mnemonicParsing="false" onAction="#onAddProductClick" prefHeight="40.0" prefWidth="119.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Add a product" textFill="WHITE">
                <font>
                   <Font name="Montserrat Bold" size="13.0" />
                </font>
                <FlowPane.margin>
                   <Insets left="20.0" />
                </FlowPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Text fx:id="txtDiscount" strokeType="OUTSIDE" strokeWidth="0.0" text="Apply discount:">
+               <font>
+                  <Font name="Montserrat Bold" size="16.0" />
+               </font>
+               <FlowPane.margin>
+                  <Insets left="50.0" />
+               </FlowPane.margin>
+            </Text>
+            <ComboBox fx:id="cbCategoriesDiscount" onAction="#onCategoryChange" prefWidth="150.0" style="-fx-background-color: #f7ebe1; -fx-border-color: #f7ebe1;" />
+            <Slider fx:id="sliderDiscount" minorTickCount="5" prefHeight="50.0" prefWidth="247.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Button fx:id="btnApplyDiscount" mnemonicParsing="false" onAction="#onApplyDiscountClick" prefHeight="40.0" prefWidth="126.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Apply" textFill="WHITE">
+               <font>
+                  <Font name="Montserrat Bold" size="13.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Button>
+            <Button fx:id="btnCancelDiscount" minWidth="34.0" mnemonicParsing="false" onAction="#onCancelDiscountClick" prefHeight="40.0" prefWidth="34.0" style="-fx-background-color: FFFFFF; -fx-background-radius: 10; -fx-border-color: #323232; -fx-border-radius: 10;" text="X">
+               <font>
+                  <Font name="Montserrat Bold" size="13.0" />
+               </font>
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

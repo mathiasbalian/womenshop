@@ -27,7 +27,8 @@ public class AccessoriesDao {
                 Accessory accessory = new Accessory(
                         resultSet.getInt("productId"),
                         resultSet.getString("name"),
-                        resultSet.getDouble("price"),
+                        resultSet.getDouble("realPrice"),
+                        resultSet.getDouble("currentPrice"),
                         resultSet.getInt("nbItems")
                 );
                 accessories.add(accessory);

@@ -8,7 +8,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Slider;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -72,14 +75,31 @@ public class MainMenuController implements Initializable {
     private Text txtFilterCategory;
 
     @FXML
+    private Button btnApplyDiscount;
+
+    @FXML
     private ComboBox<String> cbCategories;
+
+    @FXML
+    private ComboBox<String> cbCategoriesDiscount;
+
+    @FXML
+    private Slider sliderDiscount;
+
+    private List<? extends Product> products = new ArrayList<>();
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         setShopDetails();
+        sliderDiscount.valueProperty().addListener((observableValue, oldValue, newValue) ->
+                btnApplyDiscount.textProperty().setValue("Apply " + String.format("%.0f", newValue.floatValue()) + "%"));
+
         cbCategories.setItems(FXCollections.observableArrayList("All Products", "Clothes", "Shoes", "Accessories"));
+        cbCategoriesDiscount.setItems(FXCollections.observableArrayList("All Products", "Clothes", "Shoes", "Accessories"));
+
         cbCategories.getSelectionModel().selectFirst();
+        cbCategoriesDiscount.getSelectionModel().selectFirst();
         onCategoryChange();
     }
 
@@ -89,8 +109,6 @@ public class MainMenuController implements Initializable {
     }
 
     public void refreshProducts() {
-        hBoxProductList.getChildren().clear();
-        List<? extends Product> products;
         switch (cbCategories.getValue()) {
             case "All Products":
                 products = getProducts();
@@ -105,10 +123,11 @@ public class MainMenuController implements Initializable {
                 products = getClothes();
                 break;
         }
-        loadProducts(products);
+        loadProducts();
     }
 
-    private void loadProducts(List<? extends Product> products) {
+    private void loadProducts() {
+        hBoxProductList.getChildren().clear();
         for (Product product : products) {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(MainMenuController.class.getResource("product_card.fxml"));
@@ -162,5 +181,31 @@ public class MainMenuController implements Initializable {
         stage.setScene(scene);
         stage.setTitle("My Window");
         stage.show();
+    }
+
+    @FXML
+    private void onApplyDiscountClick() {
+        discount(false);
+    }
+
+    private void discount(boolean cancelDiscount) {
+        Class<? extends Product> productsClass = switch (cbCategoriesDiscount.getValue()) {
+            case "Shoes" -> Shoe.class;
+            case "Clothes" -> Clothes.class;
+            case "Accessories" -> Accessory.class;
+            default -> Product.class;
+        };
+        for (Product product : ProductDao.getProducts()) {
+            if (productsClass.isAssignableFrom(product.getClass())) {
+                product.applyDiscount(cancelDiscount ? 1 : (1 - sliderDiscount.getValue() / 100));
+                ProductDao.applyDiscount(product, cancelDiscount ? 1 : (1 - sliderDiscount.getValue() / 100));
+            }
+        }
+        refreshProducts();
+    }
+
+    @FXML
+    private void onCancelDiscountClick() {
+        discount(true);
     }
 }
