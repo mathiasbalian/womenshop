@@ -1,10 +1,12 @@
 package com.mathias.womenstore.dao;
 
+import com.mathias.womenstore.ProductCardController;
 import com.mathias.womenstore.dbmanager.DbManager;
 import com.mathias.womenstore.model.Accessory;
 import com.mathias.womenstore.model.Clothes;
 import com.mathias.womenstore.model.Product;
 import com.mathias.womenstore.model.Shoe;
+import javafx.scene.image.Image;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -124,6 +126,49 @@ public class ProductDao {
         }
 
         return products;
+    }
+
+    public static void editProduct(Product product) {
+        Connection connection = DbManager.getConnection();
+        Statement statement = null;
+
+        System.out.println("EDIT A PRODUCT");
+        System.out.println(product.getName());
+        System.out.println(product.getPrice());
+        System.out.println(product.getId());
+        try {
+            statement = connection.createStatement();
+            String query = "UPDATE Product SET name = '" + product.getName() +
+                    "', price = " + product.getPrice() +
+                    " WHERE productId = " + product.getId();
+            statement.executeUpdate(query);
+
+            if (product instanceof Shoe) {
+                query = "UPDATE Shoe SET shoeSize = '" + ((Shoe) product).getShoeSize() +
+                        "' WHERE productId = " + product.getId();
+                statement.executeUpdate(query);
+
+            } else if (product instanceof Clothes) {
+                query = "UPDATE Clothes SET size = '" + ((Clothes) product).getSize() +
+                        "' WHERE productId = " + product.getId();
+                statement.executeUpdate(query);
+            }
+
+            // Print the contents of the Product table
+            System.out.println("Contents of the Product table after update:");
+            ResultSet resultSet = statement.executeQuery("SELECT * FROM Product");
+            while (resultSet.next()) {
+                System.out.println("ID: " + resultSet.getInt("productId") +
+                        ", Name: " + resultSet.getString("name") +
+                        ", Price: " + resultSet.getDouble("price"));
+            }
+
+        } catch (SQLException e) {
+            System.out.println("fail");
+            e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, null);
+        }
     }
 
     public static void updateProductStock(Product product, boolean increase) {
