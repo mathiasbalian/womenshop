@@ -1,34 +1,19 @@
 package com.mathias.womenstore.model;
 
-public abstract class Product {
-    private int id;
-    private String name;
-    private double price;
-    private int nbItems;
+public abstract class Product implements Discount {
+    protected int id;
+    protected String name;
+    protected double realPrice;
+    protected double currentPrice;
+    protected int nbItems;
 
-    public Product(int id, String name, double price, int nbItems) {
+    public Product(int id, String name, double realPrice, double currentPrice, int nbItems) {
         this.id = id;
         this.name = name;
-        this.price = price;
+        this.realPrice = realPrice;
         this.nbItems = nbItems;
+        this.currentPrice = currentPrice;
     }
-
-    /*
-    public double sellProduct(int amount) throws IllegalArgumentException {
-        if (amount > this.nbItems) {
-            throw new IllegalArgumentException("You're trying to sell more products than the available stock.");
-        }
-        this.setNbItems(nbItems - amount);
-        return amount * this.price;
-    }
-
-    public double purchase(int amount) throws IllegalArgumentException {
-        if (amount < 0) {
-            throw new IllegalArgumentException("You're trying to buy less than 0 products.");
-        }
-        this.nbItems += amount;
-        return amount * this.price;
-    }*/
 
     public String getName() {
         return name;
@@ -36,14 +21,6 @@ public abstract class Product {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
     }
 
     public int getNbItems() {
@@ -60,5 +37,21 @@ public abstract class Product {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public double getRealPrice() {
+        return realPrice;
+    }
+
+    public void setRealPrice(double realPrice) {
+        this.realPrice = realPrice;
+    }
+
+    public double getCurrentPrice() {
+        return currentPrice;
+    }
+
+    public void setCurrentPrice(double currentPrice) {
+        this.currentPrice = currentPrice;
     }
 }
