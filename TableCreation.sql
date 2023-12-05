@@ -8,7 +8,8 @@ CREATE TABLE IF NOT EXISTS Shop (
 CREATE TABLE IF NOT EXISTS Product (
     productId INT PRIMARY KEY,
     name VARCHAR(255),
-    price DOUBLE,
+    realPrice DOUBLE,
+    currentPrice DOUBLE,
     nbItems INT,
     shopId INT,
     FOREIGN KEY (shopId) REFERENCES Shop(shopId)
@@ -32,11 +33,11 @@ CREATE TABLE IF NOT EXISTS Accessory (
 );
 
 -- Insert data into Product table
-INSERT INTO Product (productId, name, price, nbItems, shopId)
+INSERT INTO Product (productId, name, realPrice, currentPrice, nbItems, shopId)
 VALUES
-  (1, 'Sneakers', 50.0, 10, 1),
-  (2, 'T-Shirt', 20.0, 20, 1),
-  (3, 'Necklace', 30.0, 15, 1);
+  (1, 'Sneakers', 50.0, 50.0, 10, 1),
+  (2, 'T-Shirt', 20.0, 20.0, 20, 1),
+  (3, 'Necklace', 30.0, 30.0, 15, 1);
 
 -- Insert data into Shoe table
 INSERT INTO Shoe (productId, shoeSize)
@@ -52,9 +53,4 @@ VALUES
 INSERT INTO Accessory (productId)
 VALUES (3);
 
-
-SELECT * FROM Shoe NATURAL JOIN Product;
-SELECT * FROM Clothes NATURAL JOIN Product;
-SELECT * FROM Accessory NATURAL JOIN Product;
-
-SELECT * FROM Product NATURAL JOIN clothes; 
+SELECT * FROM product;
