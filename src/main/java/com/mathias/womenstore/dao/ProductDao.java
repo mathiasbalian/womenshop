@@ -17,11 +17,12 @@ public class ProductDao {
         PreparedStatement statement = null;
 
         try {
-            statement = connection.prepareStatement("INSERT INTO Product VALUES (?, ?, ?, ?, 1);");
+            statement = connection.prepareStatement("INSERT INTO Product VALUES (?, ?, ?, ?, ?, 1);");
             statement.setInt(1, product.getId());
             statement.setString(2, product.getName());
-            statement.setDouble(3, product.getPrice());
-            statement.setInt(4, product.getNbItems());
+            statement.setDouble(3, product.getRealPrice());
+            statement.setDouble(4, product.getRealPrice());
+            statement.setInt(5, product.getNbItems());
             statement.execute();
             statement.clearParameters();
 
@@ -34,7 +35,6 @@ public class ProductDao {
                 statement.setInt(1, product.getId());
                 statement.setInt(2, ((Clothes) product).getSize());
             } else {
-                System.out.println("Accessory");
                 statement = connection.prepareStatement("INSERT INTO Accessory VALUES (?);");
                 statement.setInt(1, product.getId());
             }
@@ -50,17 +50,18 @@ public class ProductDao {
     public static Product assignProductClass(ResultSet resultSet) throws SQLException {
         int productId = resultSet.getInt("productId");
         String name = resultSet.getString("name");
-        double price = resultSet.getDouble("price");
+        double realPrice = resultSet.getDouble("realPrice");
+        double currentPrice = resultSet.getDouble("currentPrice");
         int nbItems = resultSet.getInt("nbItems");
         Integer size = resultSet.getObject("size") != null ? resultSet.getInt("size") : null;
         Integer shoeSize = resultSet.getObject("shoeSize") != null ? resultSet.getInt("shoeSize") : null;
 
         if (size == null && shoeSize == null) {
-            return new Accessory(productId, name, price, nbItems);
+            return new Accessory(productId, name, realPrice, currentPrice, nbItems);
         } else if (shoeSize == null) {
-            return new Clothes(productId, name, price, nbItems, size);
+            return new Clothes(productId, name, realPrice, currentPrice, nbItems, size);
         } else {
-            return new Shoe(productId, name, price, nbItems, shoeSize);
+            return new Shoe(productId, name, realPrice, currentPrice, nbItems, shoeSize);
         }
     }
 
@@ -75,7 +76,8 @@ public class ProductDao {
             String query = "SELECT \n" +
                     "    P.productId, \n" +
                     "    P.name, \n" +
-                    "    P.price, \n" +
+                    "    P.realPrice, \n" +
+                    "    P.currentPrice, \n" +
                     "    P.nbItems, \n" +
                     "    P.shopId, \n" +
                     "    C.size AS size,\n" +
@@ -88,7 +90,8 @@ public class ProductDao {
                     "SELECT \n" +
                     "    P.productId, \n" +
                     "    P.name, \n" +
-                    "    P.price, \n" +
+                    "    P.realPrice, \n" +
+                    "    P.currentPrice, \n" +
                     "    P.nbItems, \n" +
                     "    P.shopId, \n" +
                     "    NULL AS size,\n" +
@@ -101,7 +104,8 @@ public class ProductDao {
                     "SELECT \n" +
                     "    P.productId, \n" +
                     "    P.name, \n" +
-                    "    P.price, \n" +
+                    "    P.realPrice, \n" +
+                    "    P.currentPrice, \n" +
                     "    P.nbItems, \n" +
                     "    P.shopId, \n" +
                     "    NULL AS size,\n" +
@@ -157,5 +161,21 @@ public class ProductDao {
         }
 
         return 1;
+    }
+
+    public static void applyDiscount(Product product, double percentage) {
+        Connection connection = DbManager.getConnection();
+        PreparedStatement statement = null;
+
+        try {
+            String query = "UPDATE Product SET currentPrice = realPrice * ? WHERE productId = " + product.getId();
+            statement = connection.prepareStatement(query);
+            statement.setDouble(1, percentage);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, null);
+        }
     }
 }
