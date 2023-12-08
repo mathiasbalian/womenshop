@@ -11,6 +11,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
+import org.w3c.dom.Text;
 
 public class EditProductController {
 
@@ -34,6 +35,9 @@ public class EditProductController {
 
     @FXML
     private TextField txtFieldEditSize;
+
+    @FXML
+    private Text txtEditSize;
 
     private MainMenuController mainMenuController;
     private Product product;
@@ -69,6 +73,7 @@ public class EditProductController {
         return txtFieldEditSize;
     }
 
+    public Text getTxtEditSize() { return txtEditSize; }
     public void onClickValidate() {
         product.setName(txtFieldEditName.getText());
         double discount = product.getCurrentPrice() / product.getRealPrice();
@@ -104,7 +109,7 @@ public class EditProductController {
         } else {
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("accessories.jpg")));
             getIvProduct().setImage(image);
-            getFpProductCard().setVisible(false);
+            getFpProductSize().setVisible(false);
         }
     }
 }
