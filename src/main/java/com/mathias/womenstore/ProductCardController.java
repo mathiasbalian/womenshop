@@ -57,10 +57,20 @@ public class ProductCardController {
     @FXML
     private Text txtProductStock;
 
+    @FXML
+    private Button btnDeleteProduct;
+
     private MainMenuController mainMenuController;
     private Product product;
     private Shop shop;
 
+
+    @FXML
+    private void onClickDelete()
+    {
+        ProductDao.deleteProduct(this.product.getId());
+        mainMenuController.refreshProducts();
+    }
     @FXML
     private void onClickSell() {
         if (checkSell()) {

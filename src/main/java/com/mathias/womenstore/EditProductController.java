@@ -5,11 +5,15 @@ import com.mathias.womenstore.model.Clothes;
 import com.mathias.womenstore.model.Product;
 import com.mathias.womenstore.model.Shoe;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.w3c.dom.Text;
 
@@ -74,7 +78,11 @@ public class EditProductController {
     }
 
     public Text getTxtEditSize() { return txtEditSize; }
+
     public void onClickValidate() {
+        if (!validateEditProduct()) {
+            return;
+        }
         product.setName(txtFieldEditName.getText());
         double discount = product.getCurrentPrice() / product.getRealPrice();
         product.setRealPrice(Double.parseDouble(txtFieldEditPrice.getText()));
@@ -89,6 +97,7 @@ public class EditProductController {
         mainMenuController.refreshProducts();
         Stage stage = (Stage) btnValidateEdit.getScene().getWindow();
         stage.close();
+
     }
 
     public void initializeController(Product product, MainMenuController controller) {
@@ -111,5 +120,55 @@ public class EditProductController {
             getIvProduct().setImage(image);
             getFpProductSize().setVisible(false);
         }
+    }
+
+    private boolean fieldsNotEmpty() {
+        if (product instanceof Shoe || product instanceof Clothes) {
+            return !txtFieldEditName.getText().isBlank() &&
+                    !txtFieldEditPrice.getText().isBlank() &&
+                    !txtFieldEditSize.getText().isBlank();
+        }
+        return !txtFieldEditName.getText().isBlank() &&
+                        !txtFieldEditPrice.getText().isBlank();
+    }
+
+    private boolean validateEditProduct() {
+        if (!fieldsNotEmpty()) {
+            showImpossiblePopup("Please fill all the product fields!");
+            return false;
+        }
+
+        try {
+            System.out.println(txtFieldEditPrice.getText());
+            double price = Double.parseDouble(txtFieldEditPrice.getText());
+            if (price < 0) {
+                showImpossiblePopup("Please enter a positive price!");
+                return false;
+            }
+
+            if ((product instanceof Shoe || product instanceof Clothes) && Integer.parseInt(txtFieldEditSize.getText()) < 0) {
+                showImpossiblePopup("Please enter a positive size!");
+                return false;
+            }
+
+        } catch (NumberFormatException e) {
+            showImpossiblePopup("Please enter a valid price / size!");
+            return false;
+        }
+
+        return true;
+    }
+    private void showImpossiblePopup(String message) {
+        Stage popupStage = new Stage();
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.setTitle("Alert");
+
+        Label label = new Label(message);
+        StackPane popupLayout = new StackPane();
+        popupLayout.getChildren().add(label);
+
+        Scene popupScene = new Scene(popupLayout, 250, 150);
+        popupStage.setScene(popupScene);
+        popupStage.showAndWait();
     }
 }

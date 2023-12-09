@@ -8,11 +8,20 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<FlowPane fx:id="fpProductCard" alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="350.0" prefWidth="250.0" style="-fx-background-color: #f7ebe1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathias.womenstore.ProductCardController">
+<FlowPane fx:id="fpProductCard" alignment="TOP_CENTER" columnHalignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="417.0" prefWidth="250.0" style="-fx-background-color: #f7ebe1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mathias.womenstore.ProductCardController">
    <children>
+      <FlowPane prefHeight="34.0" prefWidth="250.0">
+         <children>
+            <Button fx:id="btnDeleteProduct" mnemonicParsing="false" onAction="#onClickDelete" prefHeight="26.0" prefWidth="31.0" style="-fx-background-color: #bfa99b;" text="X">
+               <FlowPane.margin>
+                  <Insets left="210.0" top="5.0" />
+               </FlowPane.margin>
+            </Button>
+         </children>
+      </FlowPane>
       <ImageView fx:id="ivProduct" fitHeight="175.0" fitWidth="175.0" pickOnBounds="true" preserveRatio="true">
          <FlowPane.margin>
-            <Insets top="10.0" />
+            <Insets top="20.0" />
          </FlowPane.margin></ImageView>
       <FlowPane alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="37.0" prefWidth="220.0" style="-fx-background-color: #bfa99b; -fx-background-radius: 5;" vgap="10.0">
          <children>
@@ -41,6 +50,9 @@
                      </font>
                   </Text>
                </children>
+               <FlowPane.margin>
+                  <Insets top="10.0" />
+               </FlowPane.margin>
             </FlowPane>
          </children>
          <FlowPane.margin>

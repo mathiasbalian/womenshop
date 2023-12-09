@@ -12,6 +12,39 @@ import java.util.List;
 
 public class ProductDao {
 
+    public static void deleteProduct(int productId) {
+        Connection connection = DbManager.getConnection();
+        PreparedStatement statement = null;
+
+        try {
+            String deleteShoeQuery = "DELETE FROM Shoe WHERE productId = ?";
+            String deleteClothesQuery = "DELETE FROM Clothes WHERE productId = ?";
+            String deleteAccessoryQuery = "DELETE FROM Accessory WHERE productId = ?";
+
+            // Note: You may need to adapt these queries based on your schema
+
+            statement = connection.prepareStatement(deleteShoeQuery);
+            statement.setInt(1, productId);
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(deleteClothesQuery);
+            statement.setInt(1, productId);
+            statement.executeUpdate();
+
+            statement = connection.prepareStatement(deleteAccessoryQuery);
+            statement.setInt(1, productId);
+            statement.executeUpdate();
+
+            String deleteProductQuery = "DELETE FROM Product WHERE productId = ?";
+            statement = connection.prepareStatement(deleteProductQuery);
+            statement.setInt(1, productId);
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            DbManager.close(connection, statement, null);
+        }
+    }
     public static void addProduct(Product product) {
         Connection connection = DbManager.getConnection();
         PreparedStatement statement = null;
