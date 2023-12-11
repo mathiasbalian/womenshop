@@ -16,6 +16,9 @@
                <FlowPane.margin>
                   <Insets left="210.0" top="5.0" />
                </FlowPane.margin>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
             </Button>
          </children>
       </FlowPane>
