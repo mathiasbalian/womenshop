@@ -88,9 +88,17 @@ public class MainMenuController implements Initializable {
 
     private List<? extends Product> products = new ArrayList<>();
 
+    private static final double INITIAL_SHOP_CAPITAL = 2000;
+    private static final double INITIAL_SHOP_INCOME = 0;
+    private static final double INITIAL_SHOP_COSTS = 0;
+    private static final boolean SET_INITIAL_SHOP_DETAILS = false;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        if (SET_INITIAL_SHOP_DETAILS) {
+            setInitialShopDetails();
+        }
         setShopDetails();
         sliderDiscount.valueProperty().addListener((observableValue, oldValue, newValue) ->
                 btnApplyDiscount.textProperty().setValue("Apply " + String.format("%.0f", newValue.floatValue()) + "%"));
@@ -101,6 +109,12 @@ public class MainMenuController implements Initializable {
         cbCategories.getSelectionModel().selectFirst();
         cbCategoriesDiscount.getSelectionModel().selectFirst();
         onCategoryChange();
+    }
+
+    private void setInitialShopDetails() {
+        ShopDao.setCapital(INITIAL_SHOP_CAPITAL);
+        ShopDao.setIncome(INITIAL_SHOP_INCOME);
+        ShopDao.setCost(INITIAL_SHOP_COSTS);
     }
 
     @FXML
