@@ -265,13 +265,13 @@ public class ProductCardController {
         try {
             if (Double.parseDouble(priceField.getText()) < 0) return false;
         } catch (NumberFormatException e) {
-            return false;  // Handle the case when the input is not a valid double
+            return false;
         }
 
         try {
             if (Integer.parseInt(quantityField.getText()) < 0) return false;
         } catch (NumberFormatException e) {
-            return false;  // Handle the case when the input is not a valid integer
+            return false;
         }
 
         return true;
