@@ -8,13 +8,16 @@ import com.mathias.womenstore.model.Shoe;
 import com.mathias.womenstore.model.Shop;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
@@ -66,51 +69,19 @@ public class ProductCardController {
 
 
     @FXML
-    private void onClickDelete()
-    {
+    private void onClickDelete() {
         ProductDao.deleteProduct(this.product.getId());
         mainMenuController.refreshProducts();
     }
+
     @FXML
     private void onClickSell() {
-        if (checkSell()) {
-            double priceProduct = product.getCurrentPrice();
-            double currentCapital = shop.getCapital();
-            double currentIncome = shop.getIncome();
-
-            ShopDao.setCapital(currentCapital + priceProduct);
-            ShopDao.setIncome(currentIncome + priceProduct);
-            this.shop.setCapital(currentCapital + priceProduct);
-            this.shop.setIncome(currentIncome + priceProduct);
-            this.mainMenuController.setShopDetails();
-
-            ProductDao.updateProductStock(product, false);
-            this.product.setNbItems(product.getNbItems() - 1);
-            this.txtProductStock.setText("In stock: " + product.getNbItems());
-        } else {
-            showSellImpossible();
-        }
+        showBuyOrSellWindow(false);
     }
 
     @FXML
     private void onClickBuy() {
-        if (checkBuy()) {
-            double priceProduct = product.getRealPrice();
-            double currentCapital = shop.getCapital();
-            double currentCost = shop.getCost();
-
-            ShopDao.setCapital(currentCapital - priceProduct);
-            ShopDao.setCost(currentCost + priceProduct);
-            this.shop.setCapital(currentCapital - priceProduct);
-            this.shop.setCost(currentCost + priceProduct);
-            this.mainMenuController.setShopDetails();
-
-            ProductDao.updateProductStock(product, true);
-            this.product.setNbItems(product.getNbItems() + 1);
-            this.txtProductStock.setText("In stock: " + product.getNbItems());
-        } else {
-            showBuyImpossible();
-        }
+        showBuyOrSellWindow(true);
     }
 
     public void onClickEdit() {
@@ -123,7 +94,6 @@ public class ProductCardController {
             EditProductController editProductController = loader.getController();
 
             editProductController.initializeController(product, mainMenuController);
-
 
 
             Scene scene = new Scene(root);
@@ -145,17 +115,17 @@ public class ProductCardController {
     public void initializeController(Product product, MainMenuController controller) {
         this.mainMenuController = controller;
         if (product instanceof Shoe) {
-            txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + product.getCurrentPrice() + "€");
+            txtProductPrice.setText("Size " + ((Shoe) product).getShoeSize() + " - " + String.format("%.0f", product.getCurrentPrice()) + "€");
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("shoes.jpg")));
             ivProduct.setImage(image);
         } else if (product instanceof Clothes) {
-            txtProductPrice.setText("Size " + ((Clothes) product).getSize() + " - " + product.getCurrentPrice() + "€");
+            txtProductPrice.setText("Size " + ((Clothes) product).getSize() + " - " + String.format("%.0f", product.getCurrentPrice()) + "€");
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("clothes.png")));
             ivProduct.setImage(image);
         } else {
             Image image = new Image(String.valueOf(ProductCardController.class.getResource("accessories.jpg")));
             ivProduct.setImage(image);
-            txtProductPrice.setText(product.getCurrentPrice() + "€");
+            txtProductPrice.setText(String.format("%.0f", product.getCurrentPrice()) + "€");
         }
         ivProduct.setFitWidth(175);
         ivProduct.setFitHeight(175);
@@ -168,12 +138,12 @@ public class ProductCardController {
         this.shop = ShopDao.getShop();
     }
 
-    private boolean checkSell() {
-        return product.getNbItems() > 0;
+    private boolean checkSell(int quantity) {
+        return product.getNbItems() >= quantity;
     }
 
-    private boolean checkBuy() {
-        return shop.getCapital() >= product.getRealPrice();
+    private boolean checkBuy(double price) {
+        return shop.getCapital() >= price;
     }
 
     public void showSellImpossible() {
@@ -202,5 +172,108 @@ public class ProductCardController {
         Scene popupScene = new Scene(popupLayout, 300, 150);
         popupStage.setScene(popupScene);
         popupStage.showAndWait();
+    }
+
+    private void buyItem(int quantity, double price) {
+        if (checkBuy(price)) {
+            double currentCapital = shop.getCapital();
+            double currentCost = shop.getCost();
+
+            ShopDao.setCapital(currentCapital - quantity * price);
+            ShopDao.setCost(currentCost + quantity * price);
+            this.shop.setCapital(currentCapital - quantity * price);
+            this.shop.setCost(currentCost + quantity * price);
+            this.mainMenuController.setShopDetails();
+
+            ProductDao.updateProductStock(product, true, quantity);
+            this.product.setNbItems(product.getNbItems() + quantity);
+            this.txtProductStock.setText("In stock: " + product.getNbItems());
+        } else {
+            showBuyImpossible();
+        }
+    }
+
+    private void sellItem(int quantity, double price) {
+        if (checkSell(quantity)) {
+            double currentCapital = shop.getCapital();
+            double currentIncome = shop.getIncome();
+
+            ShopDao.setCapital(currentCapital + quantity * price);
+            ShopDao.setIncome(currentIncome + quantity * price);
+            this.shop.setCapital(currentCapital + quantity * price);
+            this.shop.setIncome(currentIncome + quantity * price);
+            this.mainMenuController.setShopDetails();
+
+            ProductDao.updateProductStock(product, false, quantity);
+            this.product.setNbItems(product.getNbItems() - quantity);
+            this.txtProductStock.setText("In stock: " + product.getNbItems());
+        } else {
+            showSellImpossible();
+        }
+    }
+
+
+    private void showBuyOrSellWindow(boolean buying) {
+        Stage popupStage = new Stage();
+        popupStage.setTitle(buying ? "Buy a product" : "Sell a product");
+
+        GridPane gridPane = new GridPane();
+        gridPane.setPadding(new Insets(20, 20, 20, 20));
+        gridPane.setHgap(10);
+        gridPane.setVgap(10);
+
+        Label priceLabel = new Label(buying ? "Product buy price:" : "Product sell price");
+        TextField priceField = new TextField();
+        priceField.setText(String.format("%.0f", product.getCurrentPrice()));
+        Label quantityLabel = new Label(buying ? "Number of products to buy:" : "Number of products to sell");
+        TextField quantityField = new TextField();
+
+        gridPane.add(priceLabel, 0, 0);
+        gridPane.add(priceField, 1, 0);
+        gridPane.add(quantityLabel, 0, 1);
+        gridPane.add(quantityField, 1, 1);
+
+        Button validateButton = new Button(buying ? "Buy" : "Sell");
+        validateButton.setOnAction(e -> {
+            if (checkInputs(priceField, quantityField)) {
+                double price = Double.parseDouble(priceField.getText());
+                int quantity = Integer.parseInt(quantityField.getText());
+                if (buying) {
+                    buyItem(quantity, price);
+                } else {
+                    sellItem(quantity, price);
+                }
+                popupStage.close();
+            }
+
+        });
+
+        gridPane.add(validateButton, 1, 2);
+
+        Scene scene = new Scene(gridPane, 370, 150);
+        popupStage.setScene(scene);
+
+        popupStage.initModality(Modality.APPLICATION_MODAL);
+        popupStage.showAndWait();
+    }
+
+    private boolean checkInputs(TextField priceField, TextField quantityField) {
+        if (priceField.getText().isBlank() || quantityField.getText().isBlank()) {
+            return false;
+        }
+
+        try {
+            if (Double.parseDouble(priceField.getText()) < 0) return false;
+        } catch (NumberFormatException e) {
+            return false;  // Handle the case when the input is not a valid double
+        }
+
+        try {
+            if (Integer.parseInt(quantityField.getText()) < 0) return false;
+        } catch (NumberFormatException e) {
+            return false;  // Handle the case when the input is not a valid integer
+        }
+
+        return true;
     }
 }
