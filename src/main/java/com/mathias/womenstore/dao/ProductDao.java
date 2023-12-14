@@ -45,6 +45,7 @@ public class ProductDao {
             DbManager.close(connection, statement, null);
         }
     }
+
     public static void addProduct(Product product) {
         Connection connection = DbManager.getConnection();
         PreparedStatement statement = null;
@@ -189,14 +190,14 @@ public class ProductDao {
         }
     }
 
-    public static void updateProductStock(Product product, boolean increase) {
+    public static void updateProductStock(Product product, boolean increase, int quantity) {
         Connection connection = DbManager.getConnection();
         Statement statement = null;
 
         try {
             statement = connection.createStatement();
-            String query = increase ? "UPDATE Product SET nbItems = nbItems + 1 WHERE productId = " + product.getId() :
-                    "UPDATE Product SET nbItems = nbItems - 1 WHERE productId = " + product.getId();
+            String query = increase ? "UPDATE Product SET nbItems = nbItems + " + quantity + " WHERE productId = " + product.getId() :
+                    "UPDATE Product SET nbItems = nbItems - " + quantity + " WHERE productId = " + product.getId();
             statement.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
