@@ -136,7 +136,7 @@
                </FlowPane.margin>
             </Text>
             <ComboBox fx:id="cbCategoriesDiscount" onAction="#onCategoryChange" prefWidth="150.0" style="-fx-background-color: #f7ebe1; -fx-border-color: #f7ebe1;" />
-            <Slider fx:id="sliderDiscount" minorTickCount="5" prefHeight="50.0" prefWidth="247.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
+            <Slider fx:id="sliderDiscount" minorTickCount="25" prefHeight="50.0" prefWidth="247.0" showTickLabels="true" showTickMarks="true" snapToTicks="true" />
             <Button fx:id="btnApplyDiscount" mnemonicParsing="false" onAction="#onApplyDiscountClick" prefHeight="40.0" prefWidth="126.0" style="-fx-background-color: #323232; -fx-background-radius: 10;" text="Apply" textFill="WHITE">
                <font>
                   <Font name="Montserrat Bold" size="13.0" />
