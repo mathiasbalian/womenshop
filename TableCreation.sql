@@ -1,3 +1,14 @@
+CREATE SCHEMA IF NOT EXISTS store;
+
+USE store;
+
+-- Drop tables if they exist
+DROP TABLE IF EXISTS Accessory;
+DROP TABLE IF EXISTS Clothes;
+DROP TABLE IF EXISTS Shoe;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Shop;
+
 CREATE TABLE IF NOT EXISTS Shop (
 	shopId INT PRIMARY KEY,
     capital DOUBLE NOT NULL,
@@ -32,25 +43,27 @@ CREATE TABLE IF NOT EXISTS Accessory (
     FOREIGN KEY (productId) REFERENCES Product(productId)
 );
 
+INSERT INTO Shop VALUES (1, 0, 0, 0);
+
 -- Insert data into Product table
 INSERT INTO Product (productId, name, realPrice, currentPrice, nbItems, shopId)
 VALUES
-  (1, 'Sneakers', 50.0, 50.0, 10, 1),
-  (2, 'T-Shirt', 20.0, 20.0, 20, 1),
-  (3, 'Necklace', 30.0, 30.0, 15, 1);
-
--- Insert data into Shoe table
-INSERT INTO Shoe (productId, shoeSize)
-VALUES
-  (1, 42);
+  (1, 'Dress1', 30.0, 30.0, 10, 1),
+  (2, 'Dress2', 40.0, 40.0, 20, 1),
+  (3, 'Shoes1', 20.0, 20.0, 20, 1),
+  (4, 'Accessory1', 10.0, 10.0, 20, 1);
 
 -- Insert data into Clothes table
 INSERT INTO Clothes (productId, size)
 VALUES
-  (2, 5);
+  (1, 40),
+  (2, 38);
+
+-- Insert data into Shoe table
+INSERT INTO Shoe (productId, shoeSize)
+VALUES
+  (3, 40);
 
 -- Insert data into Accessory table
 INSERT INTO Accessory (productId)
-VALUES (3);
-
-SELECT * FROM product;
+VALUES (4);
