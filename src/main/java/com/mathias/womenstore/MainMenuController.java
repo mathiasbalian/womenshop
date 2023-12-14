@@ -88,7 +88,7 @@ public class MainMenuController implements Initializable {
 
     private List<? extends Product> products = new ArrayList<>();
 
-    private static final double INITIAL_SHOP_CAPITAL = 2000;
+    private static final double INITIAL_SHOP_CAPITAL = 20000;
     private static final double INITIAL_SHOP_INCOME = 0;
     private static final double INITIAL_SHOP_COSTS = 0;
     private static final boolean SET_INITIAL_SHOP_DETAILS = false;
